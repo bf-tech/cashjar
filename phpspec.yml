@@ -1,0 +1,5 @@
+suites:
+    main:
+        namespace: Cashjar
+        psr4_prefix: Cashjar
+        src_path: app
