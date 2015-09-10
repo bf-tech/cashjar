@@ -4,12 +4,13 @@
         <title>Laravel</title>
     </head>
     <body>
-        <p>User Name:</p>
-        <p>{{$user->name}}</p>
+        <p><strong>User Name</strong> {{$user->name}}</p>
+        <p><strong>Expenses</strong></p>
         @if(count($user->expenses))
             @foreach($user->expenses as $expense)
-                <p>{{$expense->desc}}</p>
-                <p>{{$expense->cost}}</p>
+                <p><strong>Description</strong> {{$expense->desc}}</p>
+                <p><strong>Cost</strong> {{$expense->cost}}</p>
+                <p><strong>GroupEvent</strong> {{$expense->groupevent->desc}}</p>
             @endforeach
         @endif
     </body>

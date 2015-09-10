@@ -4,21 +4,21 @@ namespace Cashjar;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Expense extends Model
+class Groupevent extends Model
 {
     /**
      * The database table used by the model.
      *
      * @var string
      */
-    protected $table = 'expenses';
+    protected $table = 'groupevents';
 
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
-    protected $fillable = [ 'desc', 'cost', 'user_id', 'groupevent_id'];
+    protected $fillable = ['desc', 'paid'];
 
     /**
      * The attributes excluded from the model's JSON form.
@@ -28,18 +28,18 @@ class Expense extends Model
     protected $hidden = [];
 
     /**
-     * The user who paid for the expense.
+     * The users that belong to this group.
      */
-    public function payer()
+    public function users()
     {
         return $this->belongsTo('Cashjar\User');
     }
 
     /**
-     * The group or event realted to this expense.
+     * The expenses that belong to this group.
      */
-    public function groupevent()
+    public function expenses()
     {
-        return $this->belongsTo('Cashjar\Groupevent');
+        return $this->hasMany('Cashjar\Expense');
     }
 }

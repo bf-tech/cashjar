@@ -38,10 +38,18 @@ class User extends Model implements AuthenticatableContract,
     protected $hidden = ['password', 'remember_token'];
 
     /**
+     * The groups that the user is part of.
+     */
+    public function groupevents()
+    {
+        return $this->belongsToMany('Cashjar\Groupevent');
+    }
+
+    /**
      * The expenses that belong to the user.
      */
     public function expenses()
     {
-        return $this->belongsToMany('Cashjar\Expense');
+        return $this->hasMany('Cashjar\Expense');
     }
 }

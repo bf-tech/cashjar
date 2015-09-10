@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateExpenseUserPivotTable extends Migration
+class CreateGroupeventUserTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,19 +12,18 @@ class CreateExpenseUserPivotTable extends Migration
      */
     public function up()
     {
-        Schema::create('expense_user', function (Blueprint $table) {
+        Schema::create('groupevent_user', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('user_id')->unsigned();
-            $table->integer('expense_id')->unsigned();
-            $table->boolean('paid')->default(Null);
             $table->timestamps();
+            $table->integer('user_id')->unsigned();
+            $table->integer('groupevent_id')->unsigned();
             $table->foreign('user_id')
-        				  ->references('id')
-        				  ->on('users')
-        				  ->onDelete('cascade');
-            $table->foreign('expense_id')
+                          ->references('id')
+                          ->on('users')
+                          ->onDelete('cascade');
+            $table->foreign('groupevent_id')
                   ->references('id')
-                  ->on('expenses')
+                  ->on('groupevents')
                   ->onDelete('cascade');
         });
     }
@@ -36,6 +35,6 @@ class CreateExpenseUserPivotTable extends Migration
      */
     public function down()
     {
-        Schema::drop('expense_user');
+        Schema::drop('groupevent_user');
     }
 }
