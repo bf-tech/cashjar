@@ -30,7 +30,7 @@ class Expense extends Model
     /**
      * The user who paid for the expense.
      */
-    public function payer()
+    public function user()
     {
         return $this->belongsTo('Cashjar\User');
     }

@@ -33,12 +33,17 @@
             .title {
                 font-size: 96px;
             }
+            .small {
+                font-size: 24px;
+                opacity: 0.5;
+            }
         </style>
     </head>
     <body>
         <div class="container">
             <div class="content">
-                <div class="title">Laravel 5</div>
+                <div class="title">Cash Jar<span class="small"> - Fethi BENDIMERAD</span></div>
+                <div class="small">Laravel 5.1 | SB Admin2 <a class="small" href="/auth/login">[login]</a></div>
             </div>
         </div>
     </body>
