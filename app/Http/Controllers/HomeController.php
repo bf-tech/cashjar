@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use Cashjar\Http\Requests;
 use Cashjar\Http\Controllers\Controller;
+use DB;
 
 class HomeController extends Controller
 {
@@ -17,7 +18,16 @@ class HomeController extends Controller
     public function index()
     {
         $user = \Auth::user();
+        $toPay = 0;
+        foreach ($user->groupevents as $groupevent) {
+            foreach ($groupevent->expenses as $expense) {
+                $toPay += $expense->cost;
+            }
+            
+        }
 
-        return view('home')->with(['user' => $user]);
+        $owees = DB::table('users')->whereNotIn('id', [$user->id])->get();
+
+        return view('home')->with(['user' => $user,'owees' => $owees, 'toPay' => $toPay]);
     }
 }

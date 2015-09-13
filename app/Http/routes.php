@@ -20,6 +20,16 @@ Route::get('home', [
     'uses' => 'HomeController@index'
 ]);
 
+Route::get('readme', function () {
+    return view('welcome');
+});
+
+Route::resource('groupevent', 'GroupeventController');
+Route::get('groupevent/join/{groupevent_id}', 'GroupeventController@join');
+Route::get('groupevent/leave/{groupevent_id}', 'GroupeventController@leave');
+
+Route::resource('expense', 'ExpenseController');
+
 // Authentication routes...
 Route::get('auth/login', 'Auth\AuthController@getLogin');
 Route::post('auth/login', 'Auth\AuthController@postLogin');

@@ -3,9 +3,18 @@
 namespace Cashjar;
 
 use Illuminate\Database\Eloquent\Model;
+use DB;
 
 class Groupevent extends Model
 {
+    /**
+     * The users that belong to this group.
+     */
+    public function participants()
+    {
+        return DB::table('groupevent_user')->where('groupevent_id', $this->id)->count();
+    }
+
     /**
      * The database table used by the model.
      *

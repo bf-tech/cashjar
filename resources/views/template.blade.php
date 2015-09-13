@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 
     <!-- Custom CSS -->
+    <link href="../css/timeline.css" rel="stylesheet">
     <link href="../css/sb-admin-2.css" rel="stylesheet">
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/metisMenu/2.1.0/metisMenu.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
@@ -48,7 +49,7 @@
 
             <ul class="nav navbar-top-links navbar-right">
                 <li class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                    <a class="dropdown-toggle disabled" data-toggle="dropdown" href="#">
                         <i class="fa fa-bell fa-fw"></i>  <i class="fa fa-caret-down"></i>
                     </a>
                     <ul class="dropdown-menu dropdown-alerts">
@@ -141,34 +142,31 @@
                             <!-- /input-group -->
                         </li>
                         <li>
-                            <a href="/home"><i class="fa fa-home fa-fw"></i> Home</a>
+                            <a href="/home"><i class="fa fa-table fa-fw"></i> Home</a>
                         </li>
                         <li>
-                            <a href="#"><i class="fa fa-shopping-cart fa-fw"></i> Expenses<span class="fa arrow"></span></a>
+                            <a href="/expense"><i class="fa fa-shopping-cart fa-fw"></i> Expenses<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level collapse">
                                 <li>
-                                    <a href="/expenses/list">List Active</a>
-                                </li>
-                                <li>
-                                    <a href="/expenses/add">Add New</a>
+                                    <a href="/expense/create">Add New Own Expense</a>
                                 </li>
                             </ul>
                             <!-- /.nav-second-level -->
                         </li>
                         <li>
-                            <a href="#"><i class="fa fa-users fa-fw"></i> Group-Events<span class="fa arrow"></span></a>
+                            <a href="/groupevent"><i class="fa fa-users fa-fw"></i> Group-Events<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level collapse">
                                 <li>
-                                    <a href="groupevents/list">List Active</a>
+                                    <a href="/groupevent">List and Join</a>
                                 </li>
                                 <li>
-                                    <a href="groupevents/add">Add New</a>
+                                    <a href="/groupevent/create">Create New</a>
                                 </li>
                             </ul>
                             <!-- /.nav-second-level -->
                         </li>
                         <li>
-                            <a href="/list"><i class="fa fa-table fa-fw"></i> History</a>
+                            <a href="/readme"><i class="fa fa-file-text-o fa-fw"></i> ReadMe</a>
                         </li>
                         
                             </ul>
