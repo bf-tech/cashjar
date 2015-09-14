@@ -17,22 +17,30 @@ class User extends Model implements AuthenticatableContract,
 {
     use Authenticatable, Authorizable, CanResetPassword;
 
+    public function owees() {
+        $members = collect([]);
+        $users = User::all();
+        foreach ($users as $user) {
+            if ((!$members->contains($user)) and ($user->id != $this->id)) { $members->push($user); }
+        }
+        return $members;
+    }
 
     /**
      * How much money you owe to the person.
      * @param User::id
      */
-    public function owe($payer, $receiver)
+    public function owe($receiver)
     {
         $toPay = 0;
         $toGetPaid = 0;
         $expenses = DB::table('expenses')->where('user_id', $receiver)->get();
         foreach ($expenses as $expense) {
-            $toPay += ($expense->cost / DB::table('groupevent_user')->where('groupevent_id', $expense->groupevent_id)->count());
+            $toPay += ($expense->cost / Groupevent::findOrFail($expense->groupevent_id)->participants()->count());
         }
-        $expenses = DB::table('expenses')->where('user_id', $payer)->get();
+        $expenses = DB::table('expenses')->where('user_id', $this->id)->get();
         foreach ($expenses as $expense) {
-            $toGetPaid += ($expense->cost / DB::table('groupevent_user')->where('groupevent_id', $expense->groupevent_id)->count());
+            $toGetPaid += ($expense->cost / Groupevent::findOrFail($expense->groupevent_id)->participants()->count());
         }
         return $toPay - $toGetPaid;
     }

@@ -16,11 +16,11 @@
                         <table class="table table-hover">
                             <thead>
                                 <tr>
-                                    <th>({{$groupevent->participants()}} Participant/s)</th>
+                                    <th>({{$groupevent->participants()->count()}} Participant/s)</th>
                                 </tr>
                             </thead>
                             <tbody>
-                            @foreach($groupevent->users() as $participant)
+                            @foreach($groupevent->participants() as $participant)
                                 <tr>
                                     <td>{{$participant->name}}</td>
                                 </tr>
@@ -41,7 +41,7 @@
                             @if(count($groupevent->expenses))
                             @foreach($groupevent->expenses as $expense)
                                 <tr>
-                                    <td><a href="/expense/{{$expense->id}}"><i class="fa fa-cog"></i></a></td>
+                                    <td><a href="/expense/{{$expense->id}}/edit"><i class="fa fa-cog"></i></a></td>
                                     <td>{{$expense->desc}}</td>
                                     <td>{{$expense->cost}}</td>
                                     <td>{{$expense->user()->first()->name}}</td>

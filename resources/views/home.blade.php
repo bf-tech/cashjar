@@ -38,7 +38,7 @@
                                     <i class="fa fa-support fa-5x"></i>
                                 </div>
                                 <div class="col-xs-9 text-right">
-                                    <div class="huge">{{$toPay}}</div>
+                                    <div class="huge"> 123</div>
                                     <div>TO PAY</div>
                                 </div>
                             </div>
@@ -107,9 +107,9 @@
                         <!-- /.panel-heading -->
                         <div class="panel-body">
                             <div class="list-group">
-                                @foreach ($owees as $owee)
+                                @foreach ($user->owees() as $owee)
                                 <a href="#" class="list-group-item">
-                                    <i class="fa fa-comment fa-fw"></i> {{$owee->name}} <span class="badge pull-right">$ {{$user->owe($user->id,$owee->id)}}</span>
+                                    <i class="fa fa-comment fa-fw"></i> {{$owee->name}} <span class="badge pull-right">$ {{round($user->owe($owee->id))}}</span>
                                 </a>
                                 @endforeach
                             </div>
@@ -141,7 +141,7 @@
                                         </div>
                                         <div class="timeline-body">
                                             <p>{{ $expense->groupevent->desc }} <span class="text-muted">[{{ $expense->user->name }}]</span></p>
-                                            <p><small class="text-muted"><i class="fa fa-clock-o"></i> {{ $expense->created_at }}</small><span class="pull-right"><a href="/expense/{{ $expense->id }}"><i class="fa fa-wrench"></i></a></span></p>
+                                            <p><small class="text-muted"><i class="fa fa-clock-o"></i> {{ $expense->created_at }}</small><span class="pull-right"><a href="/expense/{{ $expense->id }}/edit"><i class="fa fa-wrench"></i></a></span></p>
                                         </div>
                                     </div>
                                 </li>

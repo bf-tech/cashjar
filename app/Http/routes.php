@@ -24,11 +24,11 @@ Route::get('readme', function () {
     return view('welcome');
 });
 
-Route::resource('groupevent', 'GroupeventController');
+Route::resource('groupevent', 'GroupeventController', ['only' => ['index', 'create', 'store']]);
 Route::get('groupevent/join/{groupevent_id}', 'GroupeventController@join');
 Route::get('groupevent/leave/{groupevent_id}', 'GroupeventController@leave');
 
-Route::resource('expense', 'ExpenseController');
+Route::resource('expense', 'ExpenseController', ['only' => ['index', 'create', 'store', 'edit', 'update']]);
 
 // Authentication routes...
 Route::get('auth/login', 'Auth\AuthController@getLogin');

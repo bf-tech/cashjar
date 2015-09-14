@@ -12,7 +12,12 @@ class Groupevent extends Model
      */
     public function participants()
     {
-        return DB::table('groupevent_user')->where('groupevent_id', $this->id)->count();
+        $participants = collect([]);
+        $groupevent = Groupevent::findOrFail($this->id);
+        foreach ($groupevent->users as $user) {
+            if (!$participants->contains($user)) { $participants->push($user); }
+        }
+        return $participants;
     }
 
     /**
@@ -41,7 +46,7 @@ class Groupevent extends Model
      */
     public function users()
     {
-        return $this->belongsTo('Cashjar\User');
+        return $this->belongsToMany('Cashjar\User');
     }
 
     /**

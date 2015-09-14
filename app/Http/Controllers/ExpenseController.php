@@ -13,6 +13,14 @@ use Cashjar\Groupevent;
 class ExpenseController extends Controller
 {
     /**
+     * Protecting the routes.
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
+    /**
      * Display a listing of the resource.
      *
      * @return Response
@@ -68,8 +76,9 @@ class ExpenseController extends Controller
      */
     public function edit($id)
     {
+        $groupevents = Groupevent::all();
         $expense = Expense::findOrFail($id);
-        return view('expense.edit')->with(['expense' => $expense]);
+        return view('expense.edit')->with(['expense' => $expense, 'groupevents' => $groupevents]);
     }
 
     /**

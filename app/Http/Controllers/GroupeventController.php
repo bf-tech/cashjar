@@ -14,6 +14,14 @@ use DB;
 class GroupeventController extends Controller
 {
     /**
+     * Protecting the routes.
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
+    /**
      * Display a listing of the resource.
      *
      * @return Response

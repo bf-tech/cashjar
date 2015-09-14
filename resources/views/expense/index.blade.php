@@ -2,6 +2,6 @@
 
 @section('content')
 
-<h1 class="page-header">List of Expenses <small>{{$user->name}}</small></h1>
+<h1 class="page-header">Expenses Page - <small>{{$user->name}}</small></h1>
 
 @endsection
