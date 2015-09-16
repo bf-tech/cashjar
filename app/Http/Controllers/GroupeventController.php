@@ -26,11 +26,27 @@ class GroupeventController extends Controller
      *
      * @return Response
      */
+    public function markAsPaid($groupevent_id)
+    {
+
+        DB::table('groupevents')
+            ->where('id', $groupevent_id)
+            ->update(['paid' => true]);
+
+        return redirect('groupevent');
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return Response
+     */
     public function join($groupevent_id)
     {
         $user = \Auth::user();
-        DB::table('groupevent_user')->insert(['user_id' => $user->id, 'groupevent_id' => $groupevent_id]);
-        $groupevents = Groupevent::all();
+        DB::table('groupevent_user')
+            ->insert(['user_id' => $user->id, 'groupevent_id' => $groupevent_id]);
+
         return redirect('groupevent');
     }
 
@@ -42,8 +58,10 @@ class GroupeventController extends Controller
     public function leave($groupevent_id)
     {
         $user = \Auth::user();
-        DB::table('groupevent_user')->where('user_id', $user->id)->where('groupevent_id', $groupevent_id)->delete();
-        $groupevents = Groupevent::all();
+        DB::table('groupevent_user')
+            ->where('user_id', $user->id)->where('groupevent_id', $groupevent_id)
+            ->delete();
+
         return redirect('groupevent');
     }
 

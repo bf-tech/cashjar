@@ -25,6 +25,7 @@ Route::get('readme', function () {
 });
 
 Route::resource('groupevent', 'GroupeventController', ['only' => ['index', 'create', 'store']]);
+Route::get('groupevent/markAsPaid/{groupevent_id}', 'GroupeventController@markAsPaid');
 Route::get('groupevent/join/{groupevent_id}', 'GroupeventController@join');
 Route::get('groupevent/leave/{groupevent_id}', 'GroupeventController@leave');
 

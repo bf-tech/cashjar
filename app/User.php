@@ -18,9 +18,12 @@ class User extends Model implements AuthenticatableContract,
 
     public function owees() {
         $members = collect([]);
+
         $participantingIn = collect([]);
         foreach ($this->groupevents as $groupevent) {
-            $participantingIn->push($groupevent);
+            if ($groupevent->paid == false) {
+                $participantingIn->push($groupevent);
+            }
         }
 
         foreach ($participantingIn as $groupevent) {
@@ -30,6 +33,8 @@ class User extends Model implements AuthenticatableContract,
         }
         return $members;
     }
+
+
 
     /**
      * How much money you owe to the person.
@@ -42,14 +47,14 @@ class User extends Model implements AuthenticatableContract,
         $receiver = User::findOrFail($receiver_id);
         foreach ($receiver->expenses as $expense) {
             $groupevent = Groupevent::findOrFail($expense->groupevent_id);
-            if ($groupevent->participants()->contains('id', $this->id)) {
+            if ($groupevent->participants()->contains('id', $this->id) and ($groupevent->paid == false)) {
                 $toPay += ($expense->cost / $groupevent->participants()->count());
             }
         }
 
         foreach ($this->expenses as $expense) {
             $groupevent = Groupevent::findOrFail($expense->groupevent_id);
-            if ($groupevent->participants()->contains('id', $receiver->id)) {
+            if ($groupevent->participants()->contains('id', $receiver->id) and ($groupevent->paid == false)) {
                 $toGetPaid += ($expense->cost / $groupevent->participants()->count());
             }
         }

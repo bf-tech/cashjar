@@ -18,6 +18,22 @@ class HomeController extends Controller
     {
         $user = \Auth::user();
 
-        return view('home')->with(['user' => $user]);
+        $expensesIn = collect([]);
+
+        $participantingIn = collect([]);
+        foreach ($user->groupevents as $groupevent) {
+            if ($groupevent->paid == false) {
+                $participantingIn->push($groupevent);
+            }
+        }
+
+        foreach ($participantingIn as $groupevent) {
+            foreach ($groupevent->expenses as $expense) {
+                $expensesIn->push($expense);
+            }
+        }
+        $sortedExpenses = $expensesIn->sortByDesc('created_at');
+
+        return view('home')->with(['user' => $user, 'sortedExpenses' => $sortedExpenses]);
     }
 }

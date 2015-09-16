@@ -8,7 +8,7 @@
         <div class="col-lg-6">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    {{$groupevent->desc}} <span class="pull-right"><a href="/groupevent/join/{{$groupevent->id}}">Join <i class="fa fa-sign-in"></i></a> <a class="text-danger" href="/groupevent/leave/{{$groupevent->id}}"><i class="fa fa-sign-out"></i> Leave</a></span>
+                    {{$groupevent->desc}} <span class="pull-right"> @if($groupevent->paid) <span class="label label-success">PAID</span> @else <a class="text-success" href="/groupevent/markAsPaid/{{$groupevent->id}}"><i class="fa fa-check-square-o"></i> as Paid</a> | <a href="/groupevent/join/{{$groupevent->id}}">Join <i class="fa fa-sign-in"></i></a> <a class="text-danger" href="/groupevent/leave/{{$groupevent->id}}"><i class="fa fa-sign-out"></i> Leave</a> @endif</span>
                 </div>
                 <!-- /.panel-heading -->
                 <div class="panel-body">
@@ -27,6 +27,12 @@
                             @endforeach
                             </tbody>
                         </table>
+
+                        <div class="text-center">
+                            
+                        </div>
+
+                        <hr>
 
                         <table class="table table-hover">
                             <thead>

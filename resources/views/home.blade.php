@@ -128,13 +128,12 @@
                         </div>
                         <!-- /.panel-heading -->
                         <div class="panel-body">
-                @if(count($user->groupevents))
-                @foreach($user->groupevents as $groupevent)
+                @if(count($sortedExpenses))
                     <ul class="timeline">
-                    @foreach($groupevent->expenses as $expense)
+                        @foreach($sortedExpenses as $expense)
                             <li {{ ($user->id == $expense->user->id) ? '' : 'class=timeline-inverted' }}>
-                                <div class="timeline-badge pull-right"><i class="fa fa-check"></i>
-                                    </div>
+                                <div class="timeline-badge pull-right"><!--<i class="fa fa-check"></i>-->
+                                </div>
                                     <div class="timeline-panel">
                                         <div class="timeline-heading">
                                             <h4 class="timeline-title">{{ $expense->desc }} <span class="label label-primary pull-right">$ {{ $expense->cost }}</span></h4>
@@ -144,12 +143,11 @@
                                             <p><small class="text-muted"><i class="fa fa-clock-o"></i> {{ $expense->created_at }}</small><span class="pull-right"><a href="/expense/{{ $expense->id }}/edit"><i class="fa fa-wrench"></i></a></span></p>
                                         </div>
                                     </div>
-                                </li>
-                    @endforeach
+                            </li>
+                        @endforeach
                     </ul>
-                @endforeach
                 @else
-                    No expenses So Far
+                    No Active Expenses
                 @endif
                 </div>
             </div>
