@@ -9,7 +9,6 @@ use Illuminate\Foundation\Auth\Access\Authorizable;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
-use DB;
 
 class User extends Model implements AuthenticatableContract,
                                     AuthorizableContract,
@@ -20,17 +19,13 @@ class User extends Model implements AuthenticatableContract,
     public function owees() {
         $members = collect([]);
         $participantingIn = collect([]);
-        $groupevents = Groupevent::all();
-        foreach ($groupevents as $groupevent) {
-            $member = false;
-            foreach ($groupevent->users as $user) {
-                if ($user->id == $this->id) { $member = true; }
-            }
-            if ($member) { $participantingIn->push($groupevent); }
+        foreach ($this->groupevents as $groupevent) {
+            $participantingIn->push($groupevent);
         }
+
         foreach ($participantingIn as $groupevent) {
             foreach ($groupevent->users as $user) {
-                if ((!$members->contains($user)) and ($user->id != $this->id)) { $members->push($user); }
+                if ((!$members->contains('id', $user->id)) and ($user->id != $this->id)) { $members->push($user); }
             }
         }
         return $members;
@@ -40,17 +35,23 @@ class User extends Model implements AuthenticatableContract,
      * How much money you owe to the person.
      * @param User::id
      */
-    public function owe($receiver)
+    public function owe($receiver_id)
     {
         $toPay = 0;
         $toGetPaid = 0;
-        $expenses = DB::table('expenses')->where('user_id', $receiver)->get();
-        foreach ($expenses as $expense) {
-            $toPay += ($expense->cost / Groupevent::findOrFail($expense->groupevent_id)->participants()->count());
+        $receiver = User::findOrFail($receiver_id);
+        foreach ($receiver->expenses as $expense) {
+            $groupevent = Groupevent::findOrFail($expense->groupevent_id);
+            if ($groupevent->participants()->contains('id', $this->id)) {
+                $toPay += ($expense->cost / $groupevent->participants()->count());
+            }
         }
-        $expenses = DB::table('expenses')->where('user_id', $this->id)->get();
-        foreach ($expenses as $expense) {
-            $toGetPaid += ($expense->cost / Groupevent::findOrFail($expense->groupevent_id)->participants()->count());
+
+        foreach ($this->expenses as $expense) {
+            $groupevent = Groupevent::findOrFail($expense->groupevent_id);
+            if ($groupevent->participants()->contains('id', $receiver->id)) {
+                $toGetPaid += ($expense->cost / $groupevent->participants()->count());
+            }
         }
         return $toPay - $toGetPaid;
     }

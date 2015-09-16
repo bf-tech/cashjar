@@ -3,7 +3,7 @@
 namespace Cashjar;
 
 use Illuminate\Database\Eloquent\Model;
-use DB;
+
 
 class Groupevent extends Model
 {
