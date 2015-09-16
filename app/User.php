@@ -19,9 +19,19 @@ class User extends Model implements AuthenticatableContract,
 
     public function owees() {
         $members = collect([]);
-        $users = User::all();
-        foreach ($users as $user) {
-            if ((!$members->contains($user)) and ($user->id != $this->id)) { $members->push($user); }
+        $participantingIn = collect([]);
+        $groupevents = Groupevent::all();
+        foreach ($groupevents as $groupevent) {
+            $member = false;
+            foreach ($groupevent->users as $user) {
+                if ($user->id == $this->id) { $member = true; }
+            }
+            if ($member) { $participantingIn->push($groupevent); }
+        }
+        foreach ($participantingIn as $groupevent) {
+            foreach ($groupevent->users as $user) {
+                if ((!$members->contains($user)) and ($user->id != $this->id)) { $members->push($user); }
+            }
         }
         return $members;
     }
