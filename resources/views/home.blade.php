@@ -100,7 +100,7 @@
                 </div>
 -->
 
-                    <div class="panel panel-primary">
+                    <div class="panel panel-green">
                         <div class="panel-heading">
                             <i class="fa fa-bell fa-fw"></i> Whom Shall I Pay
                         </div>
@@ -119,12 +119,29 @@
                         <!-- /.panel-body -->
                     </div>
 
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            Recent Activity
+                        </div>
+
+                            <!-- List group -->
+                            <ul class="list-group">
+                            @foreach($notifications as $notification)
+                                <li class="list-group-item">
+                                    <p>{{ $notification->notification }}
+                                    <span class="small pull-right">{{ $notification->created_at }}</span></p>
+                                </li>
+                            @endforeach
+                            </ul>
+                        
+                    </div>
+
 </div><div class="col-lg-8 col-md-8 col-sm-12">
 
 
                 <div id="topay" class="panel panel-default">
                         <div class="panel-heading">
-                            <i class="fa fa-clock-o fa-fw"></i> Recent Activity
+                            <i class="fa fa-clock-o fa-fw"></i> Active Expenses
                         </div>
                         <!-- /.panel-heading -->
                         <div class="panel-body">
@@ -132,8 +149,7 @@
                     <ul class="timeline">
                         @foreach($sortedExpenses as $expense)
                             <li {{ ($user->id == $expense->user->id) ? '' : 'class=timeline-inverted' }}>
-                                <div class="timeline-badge pull-right"><!--<i class="fa fa-check"></i>-->
-                                </div>
+                                <!--<div class="timeline-badge pull-right"><i class="fa fa-check"></i></div>-->
                                     <div class="timeline-panel">
                                         <div class="timeline-heading">
                                             <h4 class="timeline-title">{{ $expense->desc }} <span class="label label-primary pull-right">$ {{ $expense->cost }}</span></h4>

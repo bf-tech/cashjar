@@ -14,7 +14,7 @@
                 <div class="form-group">
                     <input class="form-control" placeholder="Password" type="password" name="password" id="password" value="">
                 </div>
-                <div class="text-center"><a href="">Forgot Password?</a></div>
+                <div class="text-center"><a href="/password/email">Forgot Password?</a></div>
                 <div class="checkbox text-center">
                     <label>
                         <input name="remember" type="checkbox">Remember Me

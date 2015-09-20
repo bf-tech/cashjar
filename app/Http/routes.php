@@ -31,6 +31,14 @@ Route::get('groupevent/leave/{groupevent_id}', 'GroupeventController@leave');
 
 Route::resource('expense', 'ExpenseController', ['only' => ['index', 'create', 'store', 'edit', 'update']]);
 
+// Password reset link request routes...
+Route::get('password/email', 'Auth\PasswordController@getEmail');
+Route::post('password/email', 'Auth\PasswordController@postEmail');
+
+// Password reset routes...
+Route::get('password/reset/{token}', 'Auth\PasswordController@getReset');
+Route::post('password/reset', 'Auth\PasswordController@postReset');
+
 // Authentication routes...
 Route::get('auth/login', 'Auth\AuthController@getLogin');
 Route::post('auth/login', 'Auth\AuthController@postLogin');

@@ -22,24 +22,34 @@ class GroupeventController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
+     * Sealing up a Groupevent and mark it as PAID
      *
-     * @return Response
+     * @return Redirect
      */
     public function markAsPaid($groupevent_id)
     {
 
-        DB::table('groupevents')
-            ->where('id', $groupevent_id)
-            ->update(['paid' => true]);
+        $groupevent = Groupevent::findOrFail($groupevent_id);
+        $groupevent->paid = true;
+        $groupevent->save();
+
+        // Add a notification
+        $user = \Auth::user();
+        $notification = $user->name.' has updated '.$groupevent->desc.' as PAID';
+        DB::table('notifications')
+            ->insert([
+                'groupevent_id' => $groupevent->id,
+                'notification' => $notification,
+                'created_at' => date('Y-m-d H:i:s')
+                ]);
 
         return redirect('groupevent');
     }
 
     /**
-     * Display a listing of the resource.
+     * when a user joins a group
      *
-     * @return Response
+     * @return Redirect
      */
     public function join($groupevent_id)
     {
@@ -47,13 +57,23 @@ class GroupeventController extends Controller
         DB::table('groupevent_user')
             ->insert(['user_id' => $user->id, 'groupevent_id' => $groupevent_id]);
 
+        // Add a notification
+        $groupevent = Groupevent::findOrFail($groupevent_id);
+        $notification = $user->name.' has joined '.$groupevent->desc;
+        DB::table('notifications')
+            ->insert([
+                'groupevent_id' => $groupevent->id,
+                'notification' => $notification,
+                'created_at' => date('Y-m-d H:i:s')
+                ]);
+
         return redirect('groupevent');
     }
 
     /**
-     * Display a listing of the resource.
+     * When a user leaves a groupevent
      *
-     * @return Response
+     * @return Redirect
      */
     public function leave($groupevent_id)
     {
@@ -61,6 +81,16 @@ class GroupeventController extends Controller
         DB::table('groupevent_user')
             ->where('user_id', $user->id)->where('groupevent_id', $groupevent_id)
             ->delete();
+
+        // Add a notification
+        $groupevent = Groupevent::findOrFail($groupevent_id);
+        $notification = $user->name.' has left '.$groupevent->desc;
+        DB::table('notifications')
+            ->insert([
+                'groupevent_id' => $groupevent->id,
+                'notification' => $notification,
+                'created_at' => date('Y-m-d H:i:s')
+                ]);
 
         return redirect('groupevent');
     }
@@ -98,7 +128,17 @@ class GroupeventController extends Controller
     {
         $input = \Request::all();
         $groupevent = new Groupevent($input);
-        \Auth::user()->groupevents()->save($groupevent);
+        $user = \Auth::user();
+        $user->groupevents()->save($groupevent);
+
+        // Add a notification
+        $notification = $user->name.' created '.$groupevent->desc;
+        DB::table('notifications')
+            ->insert([
+                'groupevent_id' => $groupevent->id,
+                'notification' => $notification,
+                'created_at' => date('Y-m-d H:i:s')
+                ]);
         
         return redirect('home');
     }

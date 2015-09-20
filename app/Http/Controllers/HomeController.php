@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use Cashjar\Http\Requests;
 use Cashjar\Http\Controllers\Controller;
+use DB;
 
 class HomeController extends Controller
 {
@@ -34,6 +35,8 @@ class HomeController extends Controller
         }
         $sortedExpenses = $expensesIn->sortByDesc('created_at');
 
-        return view('home')->with(['user' => $user, 'sortedExpenses' => $sortedExpenses]);
+        $notifications = DB::table('notifications')->orderBy('created_at', 'DESC')->take(7)->get();
+
+        return view('home')->with(['user' => $user, 'sortedExpenses' => $sortedExpenses, 'notifications' => $notifications]);
     }
 }
