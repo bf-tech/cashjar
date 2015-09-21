@@ -20,6 +20,7 @@ class HomeController extends Controller
         $user = \Auth::user();
 
         $expensesIn = collect([]);
+        $total = 0;
 
         $participantingIn = collect([]);
         foreach ($user->groupevents as $groupevent) {
@@ -31,12 +32,21 @@ class HomeController extends Controller
         foreach ($participantingIn as $groupevent) {
             foreach ($groupevent->expenses as $expense) {
                 $expensesIn->push($expense);
+                $total += $expense->cost;
             }
         }
         $sortedExpenses = $expensesIn->sortByDesc('created_at');
 
         $notifications = DB::table('notifications')->orderBy('created_at', 'DESC')->take(7)->get();
 
-        return view('home')->with(['user' => $user, 'sortedExpenses' => $sortedExpenses, 'notifications' => $notifications]);
+
+        return view('home')->with([
+            'user' => $user,
+            'sortedExpenses' => $sortedExpenses,
+            'notifications' => $notifications,
+            'total' => $total
+            ]);
     }
 }
+
+

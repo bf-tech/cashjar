@@ -28,7 +28,9 @@
         <div class="col-sm-8">
         <select name="groupevent_id" class="form-control">
         @foreach($groupevents as $groupevent)
+            @if(!$groupevent->paid)
             <option value="{{ $groupevent->id }}">{{ $groupevent->desc }}</option>
+            @endif
         @endforeach
         </select>
         </div>

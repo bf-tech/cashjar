@@ -54,6 +54,11 @@ class GroupeventController extends Controller
     public function join($groupevent_id)
     {
         $user = \Auth::user();
+
+        if (DB::table('groupevent_user')->where('groupevent_id', $groupevent_id)->where('user_id', $user->id)->count()) {
+            return redirect('groupevent');
+        }
+
         DB::table('groupevent_user')
             ->insert(['user_id' => $user->id, 'groupevent_id' => $groupevent_id]);
 
